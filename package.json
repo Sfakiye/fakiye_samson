@@ -11,16 +11,18 @@
     "license": "ISC",
     "description": "",
     "dependencies": {
-        "express": "^5.1.0"
+        "express": "^5.2.1"
     },
     "devDependencies": {
-        "@types/express": "^5.0.2",
-        "@types/node": "^22.15.24",
+        "@types/express": "^5.0.6",
+        "@types/jest": "^29.5.14",
+        "@types/node": "^22.20.4",
+        "@types/supertest": "^7.2.1",
+        "jest": "^30.5.2",
+        "supertest": "^7.2.2",
+        "ts-jest": "^29.4.12",
         "ts-node": "^10.9.2",
-        "typescript": "^5.8.3",
-        "jest": "^30.0.0",
-        "ts-jest": "^29.2.5",
-        "@types/jest": "^29.5.14"
+        "typescript": "^5.9.3"
     },
     "jest": {
         "preset": "ts-jest",
@@ -34,5 +36,17 @@
         "transform": {
             "^.+\\.ts$": "ts-jest"
         }
-    }
+    },
+    "directories": {
+        "test": "test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Sfakiye/fakiye_samson.git"
+    },
+    "type": "commonjs",
+    "bugs": {
+        "url": "https://github.com/Sfakiye/fakiye_samson/issues"
+    },
+    "homepage": "https://github.com/Sfakiye/fakiye_samson#readme"
 }

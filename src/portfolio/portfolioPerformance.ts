@@ -14,7 +14,7 @@ export function calculatePortfolioPerformance(
   const percentageChange = (profitOrLoss / initialInvestment) * 100;
 
   const performanceSummary =
-    percentageChange > 20
+    percentageChange >= 20
       ? `The portfolio has gained significantly with a profit of $${profitOrLoss}.`
       : `The portfolio has performed poorly.`;
 

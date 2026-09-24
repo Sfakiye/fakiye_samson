@@ -19,10 +19,10 @@ export function calculatePortfolioPerformance(
     throw new Error("initialInvestment and currentValue must be valid numbers");
   }
 
-  const profitOrLoss = currentValue - initialInvestment;
-  const percentageChange = (profitOrLoss / initialInvestment) * 100;
+  const profitOrLoss: number = currentValue - initialInvestment;
+  const percentageChange: number = (profitOrLoss / initialInvestment) * 100;
 
-  const performanceSummary =
+  const performanceSummary: string =
     percentageChange >= 20
       ? `The portfolio has gained significantly with a profit of $${profitOrLoss}.`
       : `The portfolio has performed poorly.`;

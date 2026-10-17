@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+﻿import { Request, Response, NextFunction } from "express";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 import {
   getAllTickets,
@@ -6,6 +6,7 @@ import {
   createTicket,
   updateTicket,
   deleteTicket,
+  calculateTicketUrgency,
 } from "../services/ticketService";
 
 const VALID_PRIORITIES = ["critical", "high", "medium", "low"];
@@ -133,6 +134,26 @@ export const removeTicket = (
     }
 
     res.status(HTTP_STATUS.OK).json({ message: "Ticket deleted" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getTicketUrgency = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
+  try {
+    const id: number = Number(req.params.id);
+    const urgency = calculateTicketUrgency(id);
+
+    if (!urgency) {
+      res.status(HTTP_STATUS.NOT_FOUND).json({ message: "Ticket not found" });
+      return;
+    }
+
+    res.status(HTTP_STATUS.OK).json({ message: "Ticket urgency calculated", data: urgency });
   } catch (error) {
     next(error);
   }

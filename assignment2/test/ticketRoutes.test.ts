@@ -1,4 +1,4 @@
-import request from "supertest";
+﻿import request from "supertest";
 import app from "../src/app";
 
 describe("Ticket Routes", () => {
@@ -37,6 +37,16 @@ describe("Ticket Routes", () => {
       .send({ status: "in-progress" });
     expect(response.status).toBe(200);
     expect(response.body.data.status).toBe("in-progress");
+  });
+
+  it("PUT /api/v1/tickets/:id should preserve unchanged fields on partial update", async () => {
+    const response = await request(app)
+      .put("/api/v1/tickets/4")
+      .send({ status: "resolved" });
+    expect(response.status).toBe(200);
+    expect(response.body.data.title).toBeDefined();
+    expect(response.body.data.priority).toBeDefined();
+    expect(response.body.data.status).toBe("resolved");
   });
 
   it("DELETE /api/v1/tickets/:id should return 404 for a non-existent ticket", async () => {

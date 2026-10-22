@@ -1,4 +1,4 @@
-import { Ticket } from "../models/ticketModel";
+﻿import { Ticket } from "../models/ticketModel";
 import { tickets } from "../../../data/ticketData";
 
 export const getAllTickets = (): Ticket[] => {
@@ -32,7 +32,7 @@ export const updateTicket = (
   id: number,
   updates: Partial<Pick<Ticket, "title" | "description" | "priority" | "status">>
 ): Ticket | undefined => {
-  const ticket = tickets.find((t) => t.id === id);
+  const ticket: Ticket | undefined = tickets.find((t) => t.id === id);
   if (!ticket) return undefined;
 
   Object.assign(ticket, updates);
@@ -40,7 +40,7 @@ export const updateTicket = (
 };
 
 export const deleteTicket = (id: number): boolean => {
-  const index = tickets.findIndex((t) => t.id === id);
+  const index: number = tickets.findIndex((t) => t.id === id);
   if (index === -1) return false;
 
   tickets.splice(index, 1);
@@ -66,11 +66,11 @@ export interface TicketUrgency {
 }
 
 export const calculateTicketUrgency = (id: number): TicketUrgency | undefined => {
-  const ticket = tickets.find((t) => t.id === id);
+  const ticket: Ticket | undefined = tickets.find((t) => t.id === id);
   if (!ticket) return undefined;
 
-  const createdDate = new Date(ticket.createdAt);
-  const now = new Date();
+  const createdDate: Date = new Date(ticket.createdAt);
+  const now: Date = new Date();
   const ticketAge: number = Math.floor(
     (now.getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24)
   );

@@ -1,5 +1,6 @@
 ﻿import { Request, Response, NextFunction } from "express";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
+import { Ticket } from "../models/ticketModel";
 import {
   getAllTickets,
   getTicketById,
@@ -7,10 +8,11 @@ import {
   updateTicket,
   deleteTicket,
   calculateTicketUrgency,
+  TicketUrgency,
 } from "../services/ticketService";
 
-const VALID_PRIORITIES = ["critical", "high", "medium", "low"];
-const VALID_STATUSES = ["open", "in-progress", "resolved"];
+const VALID_PRIORITIES: string[] = ["critical", "high", "medium", "low"];
+const VALID_STATUSES: string[] = ["open", "in-progress", "resolved"];
 
 export const getTickets = (
   req: Request,
@@ -18,7 +20,7 @@ export const getTickets = (
   next: NextFunction
 ): void => {
   try {
-    const tickets = getAllTickets();
+    const tickets: Ticket[] = getAllTickets();
     res.status(HTTP_STATUS.OK).json({
       message: "Tickets retrieved",
       count: tickets.length,
@@ -36,7 +38,7 @@ export const getTicket = (
 ): void => {
   try {
     const id: number = Number(req.params.id);
-    const ticket = getTicketById(id);
+    const ticket: Ticket | undefined = getTicketById(id);
 
     if (!ticket) {
       res.status(HTTP_STATUS.NOT_FOUND).json({ message: "Ticket not found" });
@@ -72,7 +74,7 @@ export const postTicket = (
       return;
     }
 
-    const newTicket = createTicket({ title, description, priority });
+    const newTicket: Ticket = createTicket({ title, description, priority });
     res.status(HTTP_STATUS.CREATED).json({ message: "Ticket created", data: newTicket });
   } catch (error) {
     next(error);
@@ -107,7 +109,7 @@ export const putTicket = (
     if (priority !== undefined) updates.priority = priority;
     if (status !== undefined) updates.status = status;
 
-    const updated = updateTicket(id, updates);
+    const updated: Ticket | undefined = updateTicket(id, updates);
     if (!updated) {
       res.status(HTTP_STATUS.NOT_FOUND).json({ message: "Ticket not found" });
       return;
@@ -126,7 +128,7 @@ export const removeTicket = (
 ): void => {
   try {
     const id: number = Number(req.params.id);
-    const deleted = deleteTicket(id);
+    const deleted: boolean = deleteTicket(id);
 
     if (!deleted) {
       res.status(HTTP_STATUS.NOT_FOUND).json({ message: "Ticket not found" });
@@ -146,7 +148,7 @@ export const getTicketUrgency = (
 ): void => {
   try {
     const id: number = Number(req.params.id);
-    const urgency = calculateTicketUrgency(id);
+    const urgency: TicketUrgency | undefined = calculateTicketUrgency(id);
 
     if (!urgency) {
       res.status(HTTP_STATUS.NOT_FOUND).json({ message: "Ticket not found" });

@@ -1,7 +1,7 @@
-import { Ticket } from "../api/v1/models/ticketModel";
+﻿import { Ticket } from "../api/v1/models/ticketModel";
 
 const daysAgo = (days: number): string => {
-  const date = new Date();
+  const date: Date = new Date();
   date.setDate(date.getDate() - days);
   return date.toISOString();
 };

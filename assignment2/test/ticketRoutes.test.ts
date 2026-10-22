@@ -3,18 +3,18 @@ import app from "../src/app";
 
 describe("Ticket Routes", () => {
   it("GET /api/v1/tickets should return all tickets", async () => {
-    const response = await request(app).get("/api/v1/tickets");
+    const response: request.Response = await request(app).get("/api/v1/tickets");
     expect(response.status).toBe(200);
     expect(response.body.data.length).toBeGreaterThan(0);
   });
 
   it("GET /api/v1/tickets/:id should return 404 for missing ticket", async () => {
-    const response = await request(app).get("/api/v1/tickets/999");
+    const response: request.Response = await request(app).get("/api/v1/tickets/999");
     expect(response.status).toBe(404);
   });
 
   it("POST /api/v1/tickets should create a ticket with valid data", async () => {
-    const response = await request(app).post("/api/v1/tickets").send({
+    const response: request.Response = await request(app).post("/api/v1/tickets").send({
       title: "New bug",
       description: "Something broke",
       priority: "medium",
@@ -24,7 +24,7 @@ describe("Ticket Routes", () => {
   });
 
   it("POST /api/v1/tickets should return 400 for missing title", async () => {
-    const response = await request(app).post("/api/v1/tickets").send({
+    const response: request.Response = await request(app).post("/api/v1/tickets").send({
       description: "No title here",
       priority: "medium",
     });
@@ -32,7 +32,7 @@ describe("Ticket Routes", () => {
   });
 
   it("PUT /api/v1/tickets/:id should update an existing ticket", async () => {
-    const response = await request(app)
+    const response: request.Response = await request(app)
       .put("/api/v1/tickets/1")
       .send({ status: "in-progress" });
     expect(response.status).toBe(200);
@@ -40,7 +40,7 @@ describe("Ticket Routes", () => {
   });
 
   it("PUT /api/v1/tickets/:id should preserve unchanged fields on partial update", async () => {
-    const response = await request(app)
+    const response: request.Response = await request(app)
       .put("/api/v1/tickets/4")
       .send({ status: "resolved" });
     expect(response.status).toBe(200);
@@ -50,12 +50,12 @@ describe("Ticket Routes", () => {
   });
 
   it("DELETE /api/v1/tickets/:id should return 404 for a non-existent ticket", async () => {
-    const response = await request(app).delete("/api/v1/tickets/999");
+    const response: request.Response = await request(app).delete("/api/v1/tickets/999");
     expect(response.status).toBe(404);
   });
 
   it("GET /api/v1/tickets/:id/urgency should return urgency data", async () => {
-    const response = await request(app).get("/api/v1/tickets/1/urgency");
+    const response: request.Response = await request(app).get("/api/v1/tickets/1/urgency");
     expect(response.status).toBe(200);
     expect(response.body.data.urgencyScore).toBeDefined();
   });

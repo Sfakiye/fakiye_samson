@@ -33,7 +33,6 @@ export const validateRequest = (
             const validatePart = (
                 schema: ObjectSchema,
                 data: unknown,
-                partName: string,
                 shouldStrip: boolean
             ): unknown => {
                 const result: { error?: ValidationError; value: unknown } =
@@ -45,8 +44,7 @@ export const validateRequest = (
                 if (result.error) {
                     errors.push(
                         ...result.error.details.map(
-                            (detail: ValidationErrorItem) =>
-                                `${partName}: ${detail.message}`
+                            (detail: ValidationErrorItem) => detail.message
                         )
                     );
                     return data;
@@ -58,7 +56,6 @@ export const validateRequest = (
                 req.body = validatePart(
                     schemas.body,
                     req.body ?? {},
-                    "Body",
                     settings.stripBody
                 );
             }
@@ -67,7 +64,6 @@ export const validateRequest = (
                 req.params = validatePart(
                     schemas.params,
                     req.params,
-                    "Params",
                     settings.stripParams
                 ) as Request["params"];
             }
@@ -76,7 +72,6 @@ export const validateRequest = (
                 const validatedQuery: unknown = validatePart(
                     schemas.query,
                     req.query,
-                    "Query",
                     settings.stripQuery
                 );
                 Object.defineProperty(req, "query", {
@@ -88,7 +83,7 @@ export const validateRequest = (
 
             if (errors.length > 0) {
                 res.status(HTTP_STATUS.BAD_REQUEST).json({
-                    error: `Validation error: ${errors.join(", ")}`,
+                    message: `Validation error: ${errors.join(", ")}`,
                 });
                 return;
             }
@@ -96,7 +91,7 @@ export const validateRequest = (
             next();
         } catch (error: unknown) {
             res.status(HTTP_STATUS.BAD_REQUEST).json({
-                error: error instanceof Error ? error.message : "Invalid request",
+                message: error instanceof Error ? error.message : "Invalid request",
             });
         }
     };

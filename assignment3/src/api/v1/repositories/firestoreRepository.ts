@@ -15,7 +15,9 @@ export const runTransaction = async <T>(
     try {
         return await db.runTransaction(operations);
     } catch (error: unknown) {
-        throw new Error(`Transaction failed: ${getErrorMessage(error)}`);
+        throw new Error(`Transaction failed: ${getErrorMessage(error)}`, {
+            cause: error,
+        });
     }
 };
 
@@ -35,7 +37,8 @@ export const createDocument = async <T>(
         return docRef.id;
     } catch (error: unknown) {
         throw new Error(
-            `Failed to create document in ${collectionName}: ${getErrorMessage(error)}`
+            `Failed to create document in ${collectionName}: ${getErrorMessage(error)}`,
+            { cause: error }
         );
     }
 };
@@ -47,7 +50,8 @@ export const getDocuments = async (
         return await db.collection(collectionName).get();
     } catch (error: unknown) {
         throw new Error(
-            `Failed to fetch documents from ${collectionName}: ${getErrorMessage(error)}`
+            `Failed to fetch documents from ${collectionName}: ${getErrorMessage(error)}`,
+            { cause: error }
         );
     }
 };
@@ -64,7 +68,8 @@ export const getDocumentById = async (
         return doc?.exists ? doc : null;
     } catch (error: unknown) {
         throw new Error(
-            `Failed to fetch document ${id} from ${collectionName}: ${getErrorMessage(error)}`
+            `Failed to fetch document ${id} from ${collectionName}: ${getErrorMessage(error)}`,
+            { cause: error }
         );
     }
 };
@@ -78,7 +83,8 @@ export const updateDocument = async <T>(
         await db.collection(collectionName).doc(id).update(data);
     } catch (error: unknown) {
         throw new Error(
-            `Failed to update document ${id} in ${collectionName}: ${getErrorMessage(error)}`
+            `Failed to update document ${id} in ${collectionName}: ${getErrorMessage(error)}`,
+            { cause: error }
         );
     }
 };
@@ -99,7 +105,8 @@ export const deleteDocument = async (
         }
     } catch (error: unknown) {
         throw new Error(
-            `Failed to delete document ${id} from ${collectionName}: ${getErrorMessage(error)}`
+            `Failed to delete document ${id} from ${collectionName}: ${getErrorMessage(error)}`,
+            { cause: error }
         );
     }
 };
@@ -134,7 +141,8 @@ export const deleteDocumentsByFieldValues = async (
             .map(({ fieldName, fieldValue }: FieldValuePair) => `${fieldName} == ${fieldValue}`)
             .join(" AND ");
         throw new Error(
-            `Failed to delete documents from ${collectionName} where ${fieldValueString}: ${getErrorMessage(error)}`
+            `Failed to delete documents from ${collectionName} where ${fieldValueString}: ${getErrorMessage(error)}`,
+            { cause: error }
         );
     }
 };

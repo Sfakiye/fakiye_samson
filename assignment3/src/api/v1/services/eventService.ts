@@ -94,7 +94,7 @@ export const updateEvent = async (
             updates.registrationCount ?? existing.registrationCount;
         if (registrationCount > capacity) {
             throw new AppError(
-                `Validation error: Body: Registration count (${registrationCount}) cannot exceed capacity (${capacity})`
+                `Validation error: "registrationCount" must be less than or equal to ref:capacity`
             );
         }
 

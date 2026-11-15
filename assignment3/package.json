@@ -1,0 +1,37 @@
+{
+  "name": "assignment3",
+  "version": "1.0.0",
+  "description": "Event Registration API - Joi validation and Firestore integration",
+  "main": "src/server.ts",
+  "scripts": {
+    "start": "ts-node src/server.ts",
+    "dev": "tsx watch src/server.ts",
+    "test": "jest",
+    "lint": "eslint -c eslint.config.mjs \"src/**/*.ts\" \"test/**/*.ts\" \"config/**/*.ts\""
+  },
+  "author": "Samson Fakiye",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.2.1",
+    "firebase-admin": "^13.4.0",
+    "joi": "^17.13.3",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/express": "^5.0.6",
+    "@types/jest": "^30.0.0",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^22.20.4",
+    "@types/supertest": "^7.2.1",
+    "eslint": "^10.13.0",
+    "jest": "^30.5.2",
+    "supertest": "^7.3.1",
+    "ts-jest": "^29.4.15",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.23.15",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.72.0"
+  }
+}
